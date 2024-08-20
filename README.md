@@ -9,10 +9,11 @@ Will update.
 ## Goal:
 
 ## Clone the repository
-git clone https://github.com/yourusername/your-repo-name.git
+git clone https://github.com/HuyVoDN/Docker-Learn.git
 
 ## Navigate to the project directory
-cd your-repo-name
+- For frontend: cd client
+- For backend: cd server
 
 ## Install dependencies
 npm install
