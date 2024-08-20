@@ -1,0 +1,12 @@
+08/20/2024:
+
+I say we should have about 5 pages: Login, Registration, Home, Profile and Not Found.
+and about 4 functionalities: login, regis, user customization, and logout.
+
+We could implement 2 navbars on top:
+    + For not logged in: the navbar will have 3 buttons; home, login, registration.
+    + For logged in: the navbar will have 3 buttons; home, profile, logout.
+
+We can make the website more dynamic by adding a fake loading page in between the transistion of login and logout.
+
+we should have user authentications, password hashings with jwt, middlewares so that we could handle a valid session, prevent manually entering a link forcefully.
