@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login";
 import Registration from './pages/Registration/Registration';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
+import Navbar from './Navbar/Navbar'
 import './App.scss'
 const Layout = () => {
   return (
@@ -50,6 +51,7 @@ function App() {
   return (
     <>
       <div className='app-container'>
+        <Navbar></Navbar>
         <RouterProvider router={router}/>
       </div>
     </>
