@@ -1,0 +1,30 @@
+.login-container{
+    .login-form{
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+        background-color: white;
+        border-radius: 10px;
+        h1{
+            font-size: 20px;
+            color:rgb(0, 123, 255);
+        }
+        .forgot{
+            font-size: 12px;
+        }
+        .registration{
+            font-size: 16px;
+            margin: 15px 0;
+        }
+       .link{
+        text-align: center;
+        text-decoration: none;
+            color: rgb(76, 76, 76);
+
+            &:hover{
+                text-decoration: underline;
+            }
+       }
+    }
+}
