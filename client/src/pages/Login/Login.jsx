@@ -87,7 +87,7 @@ const Login = () => {
     <>
       <div className='login-container'>
         <div className='login-form'>
-          <h1>Login</h1>
+          <h1>Login To Your Account</h1>
           <FormControl variant='outlined'>
             <TextField
               value={email}
@@ -105,7 +105,7 @@ const Login = () => {
                   </InputAdornment>
                 ),
               }}
-              style={{ marginBottom: '10px' }}
+              style={{ width:'20rem' }}
             />
           </FormControl>
           <FormControl>
@@ -137,7 +137,7 @@ const Login = () => {
                 </InputAdornment>
                 ),
               }}
-              style={{ marginBottom: '10px', width: '85%', alignSelf: 'center' }}
+              style={{ width: '20rem', alignSelf: 'center' }}
             />
           </FormControl>
 
@@ -152,6 +152,7 @@ const Login = () => {
             variant='contained'
             color='primary'
             type='submit'
+            className='login-button'
             onClick={handleLogin}>
             Login
           </Button>
