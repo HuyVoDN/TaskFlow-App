@@ -2,142 +2,186 @@ import React, { useState, useContext } from 'react';
 import './Registration.scss';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-
+import Button from '@mui/material/Button';
+import Input from '@mui/material/Input';
+import FormControl from '@mui/material/FormControl';
+import InputAdornment from '@mui/material/InputAdornment';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
+import PersonIcon from '@mui/icons-material/Person';
+import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [invalidEmail, setInvalidEmail] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [invalidUsername, setInvalidUsername] = useState(false);
-  const [password, setPassword] = useState('');
-  const [invalidPassword, setInvalidPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const [errors, setErrors] = useState({
+    email: false,
+    username: false,
+    password: false,
+    confirmPassword: false,
+  });
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
   };
 
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-    setError(!validateEmail(value));
-    if (validateEmail(value)) {
-      setInvalidEmail(false);
-    }
-    else {
-      setInvalidEmail(true);
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
+
+  const validateForm = () => {
+    const newErrors = {
+      email: !validateEmail(formData.email),
+      username: formData.username === '',
+      password: formData.password.length < 8,
+      confirmPassword: formData.password !== formData.confirmPassword,
+    };
+
+    setErrors(newErrors);
+
+    const allFieldsFilled = Object.values(formData).every((field) => field !== '');
+
+    if (!allFieldsFilled) {
+      window.alert('Please fill in all fields');
+      return false;
+    }
+    return !Object.values(newErrors).some((error) => error);
+  };
+
   const handleRegistration = async (e) => {
     e.preventDefault();
     let valid = true;
     try {
-      console.log(invalidUsername);
-      console.log(invalidEmail);
-      console.log(invalidPassword);
-      if (email == '' && password == '' && userName == '') {
-        setError(true);
-        console.error('Please fill in all fields');
-        window.alert("Please fill in all fields");
-        valid = false;
-      }
-      if (!password || password.length < 3) {
-        setInvalidPassword(true);
-        valid = false;
-        console.error('Invalid password');
-      } 
-      else 
-      {
-        setInvalidPassword(false);
-      }
-      if (email == '' || !validateEmail(email)) {
-        setInvalidEmail(true);
-        setError('email empty');
-        console.error('Invalid Email');
-        valid = false
-      } 
-      else {
-        setInvalidEmail(false);
-      }
-      if (userName == '') 
-      {
-        setInvalidUsername(true);
-        console.error('Missing Username');
-        valid = false;
-      }
-      else {
-        setInvalidUsername(false);
-      }
-  
-      if(valid){
+      if (validateForm()) {
+        navigate('/login');
+        setFormData({
+          email: '',
+          username: '',
+          password: '',
+          confirmPassword: '',
+        });
+        setErrors({
+          email: false,
+          username: false,
+          password: false,
+          confirmPassword: false,
+        });
         console.log('Registration successful');
-        setError('');
-        setEmail('');
-        setUserName('');
-        setPassword('');
-        setConfirmPassword('');
-        setInvalidEmail(false);
-        setInvalidUsername(false);
-        setInvalidPassword(false);
-       
+        window.alert('Registration successful');
+      } else {
+        console.error('Validation failed');
       }
-  
-    } 
-    catch (e) 
-    {
-      setError(e);
-      console.error(e);
-    }
-    
+    } catch (error) {
+      console.error('Registration failed');
+    };
   };
 
   return (
     <div className='registration-container'>
       <div className='registration-form'>
         <h1>Register Your Account!</h1>
-        <form onSubmit={handleRegistration}>
+        <FormControl variant='outlined'>
           <TextField
             id="outlined-basic"
+            type='text'
+            className='username input'
             label="Username"
+            name='username'
             variant="outlined"
-            value={userName}
-            error={invalidUsername}
-            helperText={invalidUsername ? 'Username is required' : ''}
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={handleChange}
+            value={formData.username}
+            error={errors.username}
+            helperText={errors.username ? 'Username is required' : ''}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PersonIcon />
+                </InputAdornment>
+              ),
+            }}
           />
+
           <TextField
             id="outlined-basic"
+            type='email'
+            className='email input'
             label="Email"
             variant="outlined"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            error={invalidEmail}
-            helperText={invalidEmail ? 'Invalid Email' : ''}
+            onChange={handleChange}
+            name='email'
+            value={formData.email}
+            error={errors.email}
+            helperText={errors.email ? 'Invalid Email' : ''}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <EmailIcon />
+                </InputAdornment>
+              ),
+            }}
           />
           <TextField
             id="outlined-basic"
+            type='password'
+            className='password input'
             label="Password"
             variant="outlined"
-            error={invalidPassword}
-            helperText={invalidPassword ? 'Invalid ass password' : ''}
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
+            value={formData.password}
+            name='password'
+            error={errors.password}
+            helperText={errors.password ? 'Password too short' : ''}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockIcon />
+                </InputAdornment>
+              ),
+            }}
+
           />
-          <div className='show-password'>
-            <input type='checkbox' onClick={handleClickShowPassword} />
-            <label>Show Password</label>
-          </div>
-          <button type='submit'>Register</button>
-          <p>Already have an account? <Link to='/login'>Login</Link></p>
-        </form>
+          <TextField
+            id="outlined-basic"
+            type='password'
+            className='confirm-password input'
+            label="Confirm Password"
+            variant="outlined"
+            onChange={handleChange}
+            value={formData.confirmPassword}
+            name='confirmPassword'
+            error={errors.confirmPassword}
+            helperText={errors.confirmPassword ? 'Password not matching' : ''}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </FormControl>
+        <div className='link'><Link className='login' to='/login'>Already have an account? Login</Link></div>
+        <Button
+          variant='contained'
+          color='primary'
+          type='submit'
+          className='registration-button'
+          onClick={handleRegistration}>
+          Login
+        </Button>
+
       </div>
     </div>
   )

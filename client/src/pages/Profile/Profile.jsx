@@ -2,7 +2,7 @@ import React from 'react'
 
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div>This is your profile page, only accessible after you logged in correctly</div>
   )
 }
 
