@@ -1,0 +1,16 @@
+.registration-container{
+    .registration-form{
+        display:flex;
+        flex-direction: column;
+        width: 100%;
+        
+        padding: 30px;
+        margin: auto;
+        background-color: white;
+        border-radius: 10px;  
+        h1{
+            font-size: 25px;
+            color:rgb(0, 123, 255);
+        }
+    }
+}

@@ -58,6 +58,7 @@ const Login = () => {
         setPasswordError(true);
         console.error('Password is required');
         valid = false;
+        return;
       } 
       else {
         setPasswordError(false);
@@ -70,6 +71,7 @@ const Login = () => {
       }
 
       if (valid) {
+        // add routing here 
         console.log('Form submitted');
         setError(false);
         setEmail('');
