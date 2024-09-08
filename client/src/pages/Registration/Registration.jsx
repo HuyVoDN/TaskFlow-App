@@ -65,6 +65,8 @@ const Registration = () => {
     let valid = true;
     try {
       if (validateForm()) {
+        //add the registration logic before these lines
+        
         navigate('/login');
         setFormData({
           email: '',
