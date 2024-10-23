@@ -13,13 +13,20 @@ import LockIcon from '@mui/icons-material/Lock';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [invalidEmail, setInvalidEmail] = useState(false);
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false,
+  });
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -27,15 +34,9 @@ const Login = () => {
 
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-    setError(!validateEmail(value));
-    if (validateEmail(value)) {
-      setInvalidEmail(false);
-    } else {
-      setInvalidEmail(true);
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const validateEmail = (email) => {
@@ -43,44 +44,44 @@ const Login = () => {
     return re.test(String(email).toLowerCase());
   };
 
+  const validateForm = () => {
+    const newErrors = {
+      email: !validateEmail(formData.email),
+      password: formData.password === '',
+    };
+
+    setErrors(newErrors);
+    const allFieldsFilled = Object.values(formData).every((field) => field !== '');
+
+    if (!allFieldsFilled) {
+      window.alert('Please fill in all fields');
+      return false;
+    }
+    return !Object.values(newErrors).some((error) => error);
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
     let valid = true;
     try {
-      if (!email && !password) {
-        setError(true);
-        console.error('Please fill in all fields');
-        window.alert("Please fill in all fields");
-        return;
-      }
+      if (validateForm()) {
+        navigate('/profile');
+        setFormData({
+          email: '',
+          password: ''
+        });
+        setErrors({
+          email: false,
+          password: false,
+        });
 
-      if (!password) {
-        setPasswordError(true);
-        console.error('Password is required');
-        valid = false;
-        return;
-      } 
-      else {
-        setPasswordError(false);
-      }
-
-      if (!validateEmail(email)) {
-        setInvalidEmail(true);
-        console.error('Invalid email address');
-        return;
-      }
-
-      if (valid) {
-        // add routing here 
         console.log('Form submitted');
-        setError(false);
-        setEmail('');
-        setPassword('');
-        setInvalidEmail(false);
+        window.alert('Form submitted');
+
+      } else {
+        console.error('Form not submitted');
       }
     }
     catch (error) {
-      setError(error);
       console.log(error);
     }
   };
@@ -92,14 +93,15 @@ const Login = () => {
           <h1>Login To Your Account</h1>
           <FormControl variant='outlined'>
             <TextField
-              value={email}
-              onChange={handleEmailChange}
+              value={formData.email}
+              onChange={handleChange}
+              name='email'
               id="outlined-email"
               type='email'
               label="Email"
               placeholder='Enter your email'
-              helperText={invalidEmail ? "Invalid email address" : " "}
-              error={invalidEmail}
+              error={errors.email}
+              helperText={errors.email ? "Invalid email address" : " "}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -107,20 +109,19 @@ const Login = () => {
                   </InputAdornment>
                 ),
               }}
-              style={{ width:'20rem' }}
+              style={{ width: '20rem' }}
             />
-          </FormControl>
-          <FormControl>
             <TextField
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
+              name='password'
               id="outlined-password"
               type={showPassword ? "text" : "password"}
               label="Password"
               variant='outlined'
               placeholder='Enter your password'
-              helperText={passwordError ? "Fill in your password" : " "}
-              error={passwordError}
+              error={errors.password}
+              helperText={errors.password ? "Fill in your password" : " "}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -129,14 +130,14 @@ const Login = () => {
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
                 ),
               }}
               style={{ width: '20rem', alignSelf: 'center' }}
