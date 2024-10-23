@@ -10,3 +10,6 @@ We could implement 2 navbars on top:
 We can make the website more dynamic by adding a fake loading page in between the transistion of login and logout.
 
 we should have user authentications, password hashings with jwt, middlewares so that we could handle a valid session, prevent manually entering a link forcefully.
+
+
+Add a email confirmation automatic system whenever a new user is created.

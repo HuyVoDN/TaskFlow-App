@@ -64,20 +64,44 @@ const Registration = () => {
     e.preventDefault();
     let valid = true;
     try {
-      if (validateForm()) {
-        navigate('/login');
-        setFormData({
-          email: '',
-          username: '',
-          password: '',
-          confirmPassword: '',
-        });
-        setErrors({
-          email: false,
-          username: false,
-          password: false,
-          confirmPassword: false,
-        });
+      console.log(invalidUsername);
+      console.log(invalidEmail);
+      console.log(invalidPassword);
+      if (email == '' && password == '' && userName == '') {
+        setError(true);
+        console.error('Please fill in all fields');
+        window.alert("Please fill in all fields");
+        valid = false;
+      }
+      if (!password || password.length < 3) {
+        setInvalidPassword(true);
+        valid = false;
+        console.error('Invalid password');
+      } 
+      else 
+      {
+        setInvalidPassword(false);
+      }
+      if (email == '' || !validateEmail(email)) {
+        setInvalidEmail(true);
+        setError('email empty');
+        console.error('Invalid Email');
+        valid = false
+      } 
+      else {
+        setInvalidEmail(false);
+      }
+      if (userName == '') 
+      {
+        setInvalidUsername(true);
+        console.error('Missing Username');
+        valid = false;
+      }
+      else {
+        setInvalidUsername(false);
+      }
+  
+      if(valid){
         console.log('Registration successful');
         window.alert('Registration successful');
       } else {
