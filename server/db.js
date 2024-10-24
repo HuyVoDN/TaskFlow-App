@@ -1,7 +1,6 @@
 import mysql from 'mysql2';
 import {config} from 'dotenv';
 import fs from 'fs';
-import { isDataView } from 'util/types';
 config();
 
 const serverCA = [fs.readFileSync('./DigiCertGlobalRootCA.crt.pem')];
@@ -33,4 +32,4 @@ const connectDB = db.getConnection()
 const closeConnection = async () => {
     db.end();
 };
-export default {db, closeConnection, connectDB};
+export default db;

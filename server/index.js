@@ -1,10 +1,9 @@
 import express from 'express';
-import mysql from 'mysql2';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import db from './db.js';
 import authRoutes from './routes/auth.js';
-
+import testRoutes from './routes/test.js';
+import usersRoutes from './routes/users.js';
 const app = express();
 
 app.use(cors({
@@ -23,5 +22,6 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.use('/', authRoutes); 
-
+app.use('/auth', authRoutes); 
+app.use('/test', testRoutes);
+app.use('/users', usersRoutes);
