@@ -11,12 +11,15 @@ import LockIcon from '@mui/icons-material/Lock';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
+import Axios from 'axios';
 
 const Registration = () => {
   const navigate = useNavigate();
-
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -57,58 +60,55 @@ const Registration = () => {
       window.alert('Please fill in all fields');
       return false;
     }
-    return !Object.values(newErrors).some((error) => error);
-  };
 
+    const hasErrors = Object.values(newErrors).some((error) => error);
+    if (hasErrors) {
+      window.alert('Please fix all errors');
+    }
+    return !hasErrors;
+  };
+  const handleClose = (event, reason) =>{
+    if (reason === 'clickaway') {
+      return;
+    }
+    setShowPopup(false);
+  };
   const handleRegistration = async (e) => {
     e.preventDefault();
     let valid = true;
     try {
-      console.log(invalidUsername);
-      console.log(invalidEmail);
-      console.log(invalidPassword);
-      if (email == '' && password == '' && userName == '') {
-        setError(true);
-        console.error('Please fill in all fields');
-        window.alert("Please fill in all fields");
-        valid = false;
-      }
-      if (!password || password.length < 3) {
-        setInvalidPassword(true);
-        valid = false;
-        console.error('Invalid password');
-      } 
-      else 
-      {
-        setInvalidPassword(false);
-      }
-      if (email == '' || !validateEmail(email)) {
-        setInvalidEmail(true);
-        setError('email empty');
-        console.error('Invalid Email');
-        valid = false
-      } 
-      else {
-        setInvalidEmail(false);
-      }
-      if (userName == '') 
-      {
-        setInvalidUsername(true);
-        console.error('Missing Username');
-        valid = false;
-      }
-      else {
-        setInvalidUsername(false);
-      }
-  
-      if(valid){
-        console.log('Registration successful');
-        window.alert('Registration successful');
+     
+      if (validateForm()) {
+        const response = await Axios.post('http://localhost:3000/auth/register', {
+          email: formData.email,
+          username: formData.username,
+          password: formData.password,
+        });
+        setFormData({
+          email: '',
+          username: '',
+          password: '',
+          confirmPassword: '',
+        });
+        setErrors({
+          email: false,
+          username: false,
+          password: false,
+          confirmPassword: false,
+        });
+        console.log('Successfully registered');
+        setPopupMessage(`Successfully registered! Redirecting to login page...`);
+        setShowPopup(true);
+        setTimeout(() => {
+          navigate('/login')}, 4000);
+
       } else {
-        console.error('Validation failed');
+        console.error('Registration failed');
       }
     } catch (error) {
-      console.error('Registration failed');
+      setPopupMessage(`Registration failed: ${error.response.data.message}`);
+      setShowPopup(true);
+      console.log(error.response);
     };
   };
 
@@ -116,6 +116,14 @@ const Registration = () => {
     <div className='registration-container'>
       <div className='registration-form'>
         <h1>Register Your Account!</h1>
+        <Snackbar
+        open={showPopup}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        autoHideDuration= {4000}
+        onClose={handleClose}
+        message={popupMessage}
+        ContentProps={{style: {fontSize: '17px', backgroundColor: 'rgb(0, 0, 112)', fontFamily:'Segoe UI', fontWeight: 'bold', height: '60px', textAlign: 'center', borderRadius: '10px'} }}
+        />
         <FormControl variant='outlined'>
           <TextField
             id="outlined-basic"

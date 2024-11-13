@@ -44,6 +44,8 @@ const getUserByEmail = async (email) => {
   };
   
 
-const login = async (req, res) => {};
+const login = async (req, res) => {
+  
+};
 
 export { register, login };
