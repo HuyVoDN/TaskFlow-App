@@ -1,13 +1,8 @@
 import db from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
+import {getUserByEmail} from "../services/userServices.js";
 // Function to get user by email
-const getUserByEmail = async (email) => {
-    const query = 'SELECT * FROM users WHERE email = ?';
-    const [result] = await db.query(query, [email]);
-    return result;
-  };
   
   // Register function
   const register = async (req, res) => {
@@ -16,10 +11,12 @@ const getUserByEmail = async (email) => {
       // Check if the user already exists
       const user = await getUserByEmail(email);
       if (user.length > 0) {
+        console.log(`A new user tried to register with an existing email. Email: ${email} at ${new Date()}`);
         return res.status(400).json({
           status: 'error',
           message: 'User already exists',
         });
+        
       }
   
       // Hash the password
@@ -27,13 +24,14 @@ const getUserByEmail = async (email) => {
       const hashedPassword = bcrypt.hashSync(password, salt);
   
       // Insert the new user into the database
-      const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-      await db.query(query, [username, email, hashedPassword]);
+      const query = 'INSERT INTO users (username, email, password, createdAt) VALUES (?, ?, ?, ?)';
+      await db.query(query, [username, email, hashedPassword, new Date()]);
   
       res.status(201).json({
         status: 'success',
         message: 'User registered successfully',
       });
+      console.log(`New User was registered: ${username} at ${new Date()}`);
     } catch (err) {
       console.log(err);
       res.status(500).json({
@@ -82,6 +80,7 @@ const login = async (req, res) =>
         message: 'User logged in successfully',
         token,
       });
+      console.log(`User ${user[0].username} logged in at ${new Date()} with a token of ${token}`);
     }
     catch(error){
       console.log(error);
@@ -93,4 +92,21 @@ const login = async (req, res) =>
 
   };
 
+// Finish implement this after user page has been made.
+const logout = async (req, res) => {
+
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    res.status(200).json({
+      status: 'success',
+      message: 'User logged out successfully',
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
+  }
+}
 export { register, login };

@@ -17,3 +17,7 @@ Add a email confirmation automatic system whenever a new user is created.
 10/23/2024:
 
 Changing database hosting service to Azure from Amazon RDS because that shit was being cringe for charging me $16???????????????
+
+11/18/2024:
+Gonna start designing user profile tomorrow, starting with UI/UX, make it simple.
+
