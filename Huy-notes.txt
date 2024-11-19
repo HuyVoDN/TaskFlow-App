@@ -21,3 +21,18 @@ Changing database hosting service to Azure from Amazon RDS because that shit was
 11/18/2024:
 Gonna start designing user profile tomorrow, starting with UI/UX, make it simple.
 
+API Endpoints Tree:
+    Authentication
+        POST /api/auth/register
+        POST /api/auth/login
+        GET /api/auth/profile
+    Projects
+        GET /api/projects
+        POST /api/projects
+        PUT /api/projects/:id
+        DELETE /api/projects/:id
+    Tasks
+        GET /api/tasks
+        POST /api/tasks
+        PUT /api/tasks/:id
+        DELETE /api/tasks/:id
