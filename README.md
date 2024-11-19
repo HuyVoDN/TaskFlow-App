@@ -1,19 +1,33 @@
-# Basic User Authentication
+# TaskFlow
 
-Huy and Kevin's project to learn what Docker is.
+A modern task management system built for seamless project collaboration and efficient task tracking.
 
-## Installation
+### Current Task I'm working on:
+- Profile Management Page
 
-Will update.
+## Features
 
-## Goal:
+### Core Functionality
+- User authentication and profile management 
+- Project creation and organization
+- Task management with priority levels
+- Team collaboration tools
+- Real-time project status tracking
 
-## Clone the repository
-git clone https://github.com/HuyVoDN/Docker-Learn.git
+### Project Management
+- Create and manage multiple projects
+- Assign team members to projects
+- Track project progress
+- Set project deadlines
 
-## Navigate to the project directory
-- For frontend: cd client
-- For backend: cd server
+### Task Management
+- Create, edit, and delete tasks
+- Assign tasks to team members
+- Set priority levels and due dates
+- Track task status
 
-## Install dependencies
-npm install
+## Tech Stack
+- **Frontend**: React.js
+- **Backend**: Node.js, Express
+- **Database**: MySQL
+- **Authentication**: JWT
