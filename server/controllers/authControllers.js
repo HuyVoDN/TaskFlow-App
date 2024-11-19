@@ -44,8 +44,53 @@ const getUserByEmail = async (email) => {
   };
   
 
-const login = async (req, res) => {
+const login = async (req, res) => 
+  {
+    try {
+      const { email, password } = req.body;
+      // Check if the user exists
+      const user = await getUserByEmail(email);
+      if (user.length === 0) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Invalid credentials, User does not exist',
+        });
+      }
   
-};
+      // Check if the password is correct
+      const isPasswordValid = bcrypt.compareSync(password, user[0].password);
+      console.log(user[0].password);
+      console.log(isPasswordValid);
+      if (!isPasswordValid) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Invalid credentials, Password is incorrect',
+        });
+      }
+  
+      // Create a JWT token
+      const token = jwt.sign(
+        { id: user[0].id, email: user[0].email },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '1h',
+        }
+      );
+  
+      res.status(200).json({
+        status: 'success',
+        message: 'User logged in successfully',
+        token,
+      });
+    }
+    catch(error){
+      console.log(error);
+      res.status(500).json({
+        status: 'error',
+        message: 'Internal Server Error',
+      });
+    }
+
+  };
 
 export { register, login };
