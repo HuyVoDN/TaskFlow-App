@@ -6,6 +6,7 @@ import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
 import Navbar from './Navbar/Navbar'
 import './App.scss'
+import { AuthProvider } from './Context/auth/AuthContext';
 const Layout = () => {
   return (
     <>
@@ -49,13 +50,13 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <>
+    <AuthProvider>
       <div className='app-container'>
         <Navbar></Navbar>
         <RouterProvider router={router}/>
       </div>
-    </>
-  )
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;

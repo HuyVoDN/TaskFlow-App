@@ -79,6 +79,10 @@ const login = async (req, res) =>
         status: 'success',
         message: 'User logged in successfully',
         token,
+        user: {
+          id: user[0].id,
+          username: user[0].username,
+          email: user[0].email},
       });
       console.log(`User ${user[0].username} logged in at ${new Date()} with a token of ${token}`);
     }

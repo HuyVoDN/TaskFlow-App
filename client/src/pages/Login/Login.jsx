@@ -1,5 +1,5 @@
 import './Login.scss';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
@@ -14,10 +14,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from "../../Context/auth/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const { login, authError } = useContext(AuthContext);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -36,7 +39,10 @@ const Login = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const validateEmail = (email) => {
@@ -54,17 +60,22 @@ const Login = () => {
     const allFieldsFilled = Object.values(formData).every((field) => field !== '');
 
     if (!allFieldsFilled) {
-      window.alert('Please fill in all fields');
+      setPopupMessage('Please fill in all fields');
+      setShowPopup(false); // Reset the showPopup state
+      setTimeout(() => setShowPopup(true), 0); // Set it to true again after a short delay
       return false;
     }
     return !Object.values(newErrors).some((error) => error);
   };
   const handleLogin = async (e) => {
     e.preventDefault();
-    let valid = true;
+    
     try {
       if (validateForm()) {
-        navigate('/profile');
+        const success = await login(formData);
+        if (success){
+
+          navigate('/profile');
         setFormData({
           email: '',
           password: ''
@@ -73,10 +84,19 @@ const Login = () => {
           email: false,
           password: false,
         });
-
-        console.log('Form submitted');
-        window.alert('Form submitted');
-
+        setPopupMessage('Successfully logged in! Redirecting to profile page...');
+        setShowPopup(true);
+        setTimeout(() => {
+          navigate('/profile');
+        }, 4000);
+        }
+        else{
+          setPopupMessage(authError);
+          setShowPopup(false); // Reset the showPopup state
+          setTimeout(() => setShowPopup(true), 0); // Set it to true again after a short delay
+          console.log(authError);
+        }
+        
       } else {
         console.error('Form not submitted');
       }
