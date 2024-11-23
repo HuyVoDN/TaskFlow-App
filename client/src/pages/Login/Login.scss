@@ -1,4 +1,11 @@
 .login-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(315deg, #a5a5a5 0%, #000000 70%);
     .login-form{
         width: 100%;
         max-width: 330px;

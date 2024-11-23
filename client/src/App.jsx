@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import Home from "./pages/Home/Home";
+import Landing from "./pages/Landing/Landing";
 import Login from "./pages/Login/Login";
 import Registration from './pages/Registration/Registration';
 import NotFound from './pages/NotFound/NotFound';
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <Landing />
       },
 
       {
@@ -52,7 +52,7 @@ function App() {
   return (
     <AuthProvider>
       <div className='app-container'>
-        <Navbar></Navbar>
+        
         <RouterProvider router={router}/>
       </div>
     </AuthProvider>

@@ -40,7 +40,7 @@ const Registration = () => {
       setPopupMessage(authError);
       setShowPopup(false);
       setTimeout(() => setShowPopup(true), 0); // Set it to true again after a short delay
-      console.error("Login failed");
+      console.error("Registration failed");
       console.log(authError);
     }
   }, [authError]);
@@ -242,13 +242,7 @@ const Registration = () => {
           Register
         </Button>
       </div>
-      <Snackbar
-          open={showPopup}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          autoHideDuration={4000}
-          onClose={() => setShowPopup(false)}
-          message={popupMessage}
-        />
+     
     </div>
   );
 };

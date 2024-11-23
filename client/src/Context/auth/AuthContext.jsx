@@ -56,6 +56,7 @@ export const AuthProvider = ({ children }) => {
         setToken(response.data.token);
         setIsAuthenticated(true);
         setAuthError(null);
+        console.log(response);
         return true;
       } else {
         setAuthError(response.data.message);

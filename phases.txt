@@ -1,5 +1,5 @@
 Phase 1: User Profile (1-2 weeks) [Currently On]
-    Update database with new tables
+    Update database with new tables [ DONE]
     Create user dashboard
     Display user information
     Add profile editing functionality

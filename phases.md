@@ -1,6 +1,7 @@
 # Phase 1: User Profile (1-2 weeks) [Currently On]
 
-- Update database with new tables
+- Update database with new tables [ Done ]
+- Need to add a home page
 - Create user dashboardDisplay user information
 - Add profile editing functionality
 - Show user's projects overview
@@ -19,7 +20,6 @@
     * Add/remove project members
     * Set member roles
     * Display team members list
-
 
 # Phase 3: Tasks (2-3 weeks)
 

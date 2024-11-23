@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unna:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@keyframes wave {
+    0% {
+        transform: translateY(0);
+  }
+    50% {
+        transform: translateY(-5px);
+  }
+    100% {
+        transform: translateY(0);
+  }
+}
+
+.landing-container {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #a5a5a5;
+    background-image: linear-gradient(315deg, #a5a5a5 0%, #000000 70%);
+
+    .landing-top {
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+    .landing-header {
+        font-family:'Ubuntu';
+        color:#fff;
+        font-size: 8rem;
+        //font-weight: bolder;
+        text-transform: uppercase;
+        text-shadow: -6px 6px 1px rgb(32, 93, 173);
+        //letter-spacing: 10px;
+        }
+    .landing-text{
+        color:#fff;
+        font-family:'Alumni Sans Pinstripe';
+        //text-shadow: -2px 4px 1.5px rgba(121, 121, 121, 0.897);
+        font-size:3.4rem;
+       // margin-bottom: 0.5rem;
+    }
+  }
+
+    .landing-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        .landing-button {
+        font-family:'Ubuntu';
+        padding: 1rem 2rem;
+        font-size: 1.4rem;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(32, 93, 173);
+        box-shadow: #000000 2px 2px 2px;
+        color: #ececec;
+        cursor: pointer;
+        transition: all ease-in-out 0.3s;
+
+        &:hover {
+        background-color: #ffffff;
+        color:#000000;
+        box-shadow: #dfdfdfc2 0px 0px 12px;
+      }
+    }
+  }
+}
+
+
