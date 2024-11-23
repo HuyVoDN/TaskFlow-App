@@ -8,17 +8,31 @@
     background-image: linear-gradient(315deg, #a5a5a5 0%, #000000 70%);
     .registration-form{
         display:flex;
+        width: 100%;
+        height: 100%;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
         align-self: center;
+        max-width: 830px;
+        max-height: 530px;
         padding: 30px;
         margin: auto;
-        background-color: white;
-        
-        border-radius: 10px;  
-        h1{
-            font-size: 25px;
-            color:rgb(0, 123, 255);
+        background-color: rgba(55, 55, 55, 0.185);
+        box-shadow: 0px 5px 25px rgba(255, 255, 255, 0.205), 0px -5px 25px rgba(255, 255, 255, 0.205);
+        .registration-header{
+            h1{
+                font-family: "Ubuntu";
+                font-size: 50px;
+                color:rgb(32, 93, 173);
+            }
+            p{
+                font-family:"Roboto";
+                font-size: 16px;
+                margin-top: -30px;
+                margin-bottom: 40px;
+                color: #a1a1a1;
+            }
         }
         .input{
             display:flex;
@@ -28,18 +42,21 @@
             width: 20rem;
         }
         .registration-button{
+            font-family: 'Ubuntu';
+            font-weight:bolder;
             width: 20rem;
             margin: 10px 0;
             height: 3rem;
-            background-color: rgb(0, 123, 255);
+            background-color: rgb(32, 93, 173);
         }
+       
         .link{
-            margin-top: 20px;
-            .login{     
-                font-size: 16px;
+            .login{
                 text-align: center;
                 text-decoration: none;
-                color: rgb(76, 76, 76);
+                color: #a1a1a1;
+                font-size:14px;
+                margin: 2px 0;
                 &:hover{
                     text-decoration: underline;
                 }

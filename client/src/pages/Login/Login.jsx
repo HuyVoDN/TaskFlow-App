@@ -17,6 +17,12 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/auth/AuthContext";
 import Snackbar from "@mui/material/Snackbar";
 
+const styles = theme => ({
+  input :{
+    color:white
+    
+  }
+})
 const Login = () => {
   const navigate = useNavigate();
   const { login, authError } = useContext(AuthContext);
@@ -88,11 +94,12 @@ const Login = () => {
         const success = await login(formData);
 
         if (success) {
-    
-          setTimeout(() => setFormData({
-            email: "",
-            password: "",
-          }));
+          setTimeout(() =>
+            setFormData({
+              email: "",
+              password: "",
+            })
+          );
           setErrors({
             email: false,
             password: false,
@@ -122,7 +129,6 @@ const Login = () => {
     <>
       <div className="login-container">
         <div className="login-form">
-          <h1>Login To Your Account</h1>
           <Snackbar
             open={showPopup}
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -141,33 +147,40 @@ const Login = () => {
               },
             }}
           />
+          <div className="login-header">
+            <h1>Welcome</h1>
+            <p> Enter your credentials to login to your account </p>
+          </div>
+
           <FormControl variant="outlined">
             <TextField
               value={formData.email}
               onChange={handleChange}
+              className="input-fields"
               name="email"
               id="outlined-email"
               type="email"
-              label="Email"
               placeholder="Enter your email"
               error={errors.email}
               helperText={errors.email ? "Invalid email address" : " "}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <EmailIcon />
+                    <EmailIcon
+                    style={{ color: "white" }} />
                   </InputAdornment>
                 ),
+                sx: {color: 'white', fontFamily: 'Segoe UI', fontSize: '14px' }
               }}
               style={{ width: "20rem" }}
+              
             />
             <TextField
               value={formData.password}
               onChange={handleChange}
               name="password"
               id="outlined-password"
-              type={showPassword ? "text" : "password"}
-              label="Password"
+              type={showPassword ? "text" : "password"}       
               variant="outlined"
               placeholder="Enter your password"
               error={errors.password}
@@ -175,7 +188,8 @@ const Login = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockIcon />
+                    <LockIcon 
+                    style={{ color: "white" }}/>
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -184,11 +198,13 @@ const Login = () => {
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
+                      style={{ color: "white" }}
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 ),
+                sx: {color: 'white', fontFamily: 'Segoe UI', fontSize: '14px' }
               }}
               style={{ width: "20rem", alignSelf: "center" }}
             />

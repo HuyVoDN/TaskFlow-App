@@ -1,7 +1,9 @@
-# Phase 1: User Profile (1-2 weeks) [Currently On]
+# Phase 1: User Profile (2-3 weeks) [Currently On]
 
 - Update database with new tables [ Done ]
-- Need to add a home page
+- Make an email verification functionality
+- Create a forgot password page and add password reset functionality
+- Need to add a home page [ DONE ]
 - Create user dashboardDisplay user information
 - Add profile editing functionality
 - Show user's projects overview

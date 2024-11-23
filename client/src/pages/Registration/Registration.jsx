@@ -129,8 +129,7 @@ const Registration = () => {
   return (
     <div className="registration-container">
       <div className="registration-form">
-        <h1>Register Your Account!</h1>
-        <Snackbar
+      <Snackbar
           open={showPopup}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           autoHideDuration={4000}
@@ -148,12 +147,16 @@ const Registration = () => {
             },
           }}
         />
+        <div className="registration-header">
+        <h1>Registration</h1>
+        <p>Create your account to get started!</p>
+        </div>
         <FormControl variant="outlined">
           <TextField
             id="outlined-basic"
+            placeholder="Username"
             type="text"
             className="username input"
-            label="Username"
             name="username"
             variant="outlined"
             onChange={handleChange}
@@ -163,9 +166,14 @@ const Registration = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PersonIcon />
+                  <PersonIcon 
+                  style={{color:"rgb(161, 161, 161)"}}/>
                 </InputAdornment>
               ),
+              sx: {color: 'white', fontFamily: 'Segoe UI', fontSize: '14px' }
+            }}
+            InputLabelProps={{
+              style: { color: "rgb(161, 161, 161)" },
             }}
           />
 
@@ -173,26 +181,31 @@ const Registration = () => {
             id="outlined-basic"
             type="email"
             className="email input"
-            label="Email"
             variant="outlined"
             onChange={handleChange}
             name="email"
+            placeholder="Email"
             value={formData.email}
             error={errors.email}
             helperText={errors.email ? "Invalid Email" : ""}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailIcon />
+                  <EmailIcon 
+                   style={{color:"rgb(161, 161, 161)"}}/>
                 </InputAdornment>
               ),
+              sx: {color: 'white', fontFamily: 'Segoe UI', fontSize: '14px' }
+            }}
+            InputLabelProps={{
+              style: { color: "rgb(161, 161, 161)" },
             }}
           />
           <TextField
             id="outlined-basic"
             type="password"
             className="password input"
-            label="Password"
+            placeholder="Password"
             variant="outlined"
             onChange={handleChange}
             value={formData.password}
@@ -202,16 +215,22 @@ const Registration = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <LockIcon />
+                  <LockIcon
+                   style={{color:"rgb(161, 161, 161)"}} />
                 </InputAdornment>
               ),
+              sx: {color: 'white', fontFamily: 'Segoe UI', fontSize: '14px' }
             }}
+            InputLabelProps={{
+              style: { color: "rgb(161, 161, 161)" },
+            }}
+            
           />
           <TextField
             id="outlined-basic"
             type="password"
             className="confirm-password input"
-            label="Confirm Password"
+            placeholder="Confirm Password"
             variant="outlined"
             onChange={handleChange}
             value={formData.confirmPassword}
@@ -221,10 +240,16 @@ const Registration = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <LockIcon />
+                  <LockIcon
+                   style={{color:"rgb(161, 161, 161)"}}/>
                 </InputAdornment>
               ),
+              sx: {color: 'white', fontFamily: 'Segoe UI', fontSize: '14px' }
             }}
+            InputLabelProps={{
+              style: { color: "rgb(161, 161, 161)" },
+            }}
+  
           />
         </FormControl>
         <div className="link">
