@@ -1,4 +1,4 @@
-.registration-container{
+.forgot-container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +6,7 @@
     height: 100vh;
     width: 100vw;
     background-image: radial-gradient(#0d1d48, #17151d);
-    .registration-form{
+    .forgot-form{
         display:flex;
         width: 100%;
         height: 100%;
@@ -20,7 +20,8 @@
         margin: auto;
         background-color: rgba(55, 55, 55, 0.185);
         box-shadow: 0px 5px 25px rgba(255, 255, 255, 0.116), 0px -5px 25px rgba(255, 255, 255, 0.116);
-        .registration-header{
+
+        .forgot-header{
             h1{
                 font-family: "Ubuntu";
                 font-size: 50px;
@@ -33,15 +34,16 @@
                 margin-bottom: 40px;
                 color: #a1a1a1;
             }
+            
         }
-        .input{
+        .forgot-input{
             display:flex;
             flex-direction: column;
             font-size: 16px;
             margin: 6px;
             width: 20rem;
         }
-        .registration-button{
+        .forgot-button{
             font-family: 'Ubuntu';
             font-weight:bolder;
             width: 20rem;
@@ -49,8 +51,12 @@
             height: 3rem;
             background-color: rgb(32, 93, 173);
         }
-       
-        .link{
+        .other-links{
+            display:flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 20rem;
+            margin: 10px 0;
             .login{
                 text-align: center;
                 text-decoration: none;
@@ -61,7 +67,17 @@
                     text-decoration: underline;
                 }
             }
+            .registration{
+                text-align: center;
+                text-decoration: none;
+                color: #a1a1a1;
+                font-size:14px;
+                margin: 2px 0;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
         }
-        
     }
+    
 }

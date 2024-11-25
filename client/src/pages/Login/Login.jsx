@@ -16,7 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/auth/AuthContext";
 import Snackbar from "@mui/material/Snackbar";
-
+import {Fade} from "react-awesome-reveal";
 const styles = theme => ({
   input :{
     color:white
@@ -128,6 +128,7 @@ const Login = () => {
   return (
     <>
       <div className="login-container">
+        <Fade>
         <div className="login-form">
           <Snackbar
             open={showPopup}
@@ -211,7 +212,7 @@ const Login = () => {
           </FormControl>
 
           <div className="forgot">
-            <Link className="link" to="/contactus">
+            <Link className="link" to="/forgot-password">
               Forgot your password?
             </Link>
           </div>
@@ -231,6 +232,8 @@ const Login = () => {
             Login
           </Button>
         </div>
+        </Fade>
+        
       </div>
     </>
   );

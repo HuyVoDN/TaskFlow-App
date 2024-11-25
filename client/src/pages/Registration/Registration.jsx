@@ -15,6 +15,7 @@ import Snackbar from "@mui/material/Snackbar";
 import PersonIcon from "@mui/icons-material/Person";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/auth/AuthContext";
+import {Fade} from "react-awesome-reveal";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -128,12 +129,13 @@ const Registration = () => {
 
   return (
     <div className="registration-container">
+      <Fade>
       <div className="registration-form">
       <Snackbar
           open={showPopup}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           autoHideDuration={4000}
-          onClose={handleClose}
+          onClose={() => setShowPopup(false)}
           message={popupMessage}
           ContentProps={{
             style: {
@@ -267,7 +269,7 @@ const Registration = () => {
           Register
         </Button>
       </div>
-     
+      </Fade>
     </div>
   );
 };

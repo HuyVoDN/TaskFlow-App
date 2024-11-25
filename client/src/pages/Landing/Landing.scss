@@ -1,78 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @keyframes wave {
-    0% {
-        transform: translateY(0);
+  0% {
+    transform: translateY(0);
   }
-    50% {
-        transform: translateY(-5px);
+  50% {
+    transform: translateY(-5px);
   }
-    100% {
-        transform: translateY(0);
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes waveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    color: rgba(255, 255, 255, 0.2); /* White color */
+    text-shadow: 0.05em 0 0 #ffffff, -0.025em -0.05em 0 #00eeff,
+      0.025em 0.05em 0 #000000; /* Dark blue shades */
+  }
+  14% {
+    text-shadow: 0.05em 0 0 #ffffff, -0.025em -0.05em 0 #ffffff,
+      0.025em 0.05em 0 #00008b;
+  }
+  15% {
+    color: #000000;
+    text-shadow: -0.05em -0.025em 0 #000000, 0.025em -0.025em 0 #ffffff,
+      -0.05em -0.05em 0 #00008b;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #fdfdfd, 0.025em -0.025em 0 #ffffff,
+      -0.05em -0.05em 0 #000000;
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 #00008b, -0.025em 0.05em 0 #00fff2,
+      0 -0.05em 0 #000000;
+  }
+  99% {
+    color: #0000cd;
+    text-shadow: 0.025em 0.05em 0 #00008b, -0.025em 0.05em 0 #00fff2,
+    0 -0.05em 0 #000000;
+  }
+  100% {
+    text-shadow: -0.025em 0 0 #ffffff, -0.025em -0.025em 0 #ffffff,
+      -0.025em -0.05em 0 #003bfd;
   }
 }
 
 .landing-container {
-    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #a5a5a5;
+  background-image: radial-gradient(#0d1d48, #17151d);
+
+  .landing-top {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: #a5a5a5;
-    background-image: linear-gradient(315deg, #a5a5a5 0%, #000000 70%);
-
-    .landing-top {
-        
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
 
     .landing-header {
-        font-family:'Ubuntu';
-        color:#fff;
-        font-size: 8rem;
-        //font-weight: bolder;
-        text-transform: uppercase;
-        text-shadow: -6px 6px 1px rgb(32, 93, 173);
-        //letter-spacing: 10px;
-        }
-    .landing-text{
-        color:#fff;
-        font-family:'Alumni Sans Pinstripe';
-        //text-shadow: -2px 4px 1.5px rgba(121, 121, 121, 0.897);
-        font-size:3.4rem;
-       // margin-bottom: 0.5rem;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      font-size: 8rem;
+      text-transform: uppercase;
+      text-shadow: -6px 6px 1px rgb(32, 93, 173);
+      transition: all 0.3s ease-in-out;
+      position: relative;
+
+      &:hover {
+        
+        color: rgb(255, 255, 255);
+        text-shadow: 0px 0px 15px rgb(0, 110, 255);
+      }
+
+      // &:hover::before,
+      // &:hover::after {
+      //   content: attr(data-text);
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   opacity: 0.8;
+      // }
+
+      // &:hover::before {
+      //   animation: glitch 650ms infinite;
+      //   clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      //   transform: translate(-0.025em, -0.0125em);
+      // }
+
+      // &:hover::after {
+      //   animation: glitch 375ms infinite;
+      //   clip-path: polygon(0 65%, 100% 20%, 100% 100%, 0 70%);
+      //   transform: translate(0.0125em, 0.025em);
+      // }
+    }
+
+    .landing-text {
+      color: #fff;
+      font-family: 'Alumni Sans Pinstripe';
+      font-size: 3.4rem;
     }
   }
 
-    .landing-links {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-bottom: 2rem;
+  .landing-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
 
-        .landing-button {
-        font-family:'Ubuntu';
-        padding: 1rem 2rem;
-        font-size: 1.4rem;
-        border: none;
-        border-radius: 5px;
-        background-color: rgb(32, 93, 173);
-        box-shadow: #000000 2px 2px 2px;
-        color: #ececec;
-        cursor: pointer;
-        transition: all ease-in-out 0.3s;
+    .landing-button {
+      font-family: 'Ubuntu';
+      padding: 1rem 2rem;
+      font-size: 1.4rem;
+      border: none;
+      border-radius: 5px;
+      background-color: rgb(32, 93, 173);
+      box-shadow: #000000 2px 2px 2px;
+      color: #ececec;
+      cursor: pointer;
+      transition: all ease-in-out 0.3s;
 
-        &:hover {
+      &:hover {
         background-color: #ffffff;
-        color:#000000;
+        color: #000000;
         box-shadow: #dfdfdfc2 0px 0px 12px;
       }
     }
   }
 }
-
-

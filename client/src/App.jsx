@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login";
 import Registration from './pages/Registration/Registration';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
+import Forgot from './pages/ForgotPassword/Forgot';
 import Navbar from './Navbar/Navbar'
 import './App.scss'
 import { AuthProvider } from './Context/auth/AuthContext';
@@ -39,11 +40,16 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile/>
       },
-
+      {
+        path: "/forgot-password",
+        element: <Forgot/>
+      }
+      ,
       {
         path: "*",
         element: <NotFound/>
       }
+
     ]
   }
 ]);
