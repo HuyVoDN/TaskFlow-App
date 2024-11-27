@@ -1,9 +1,13 @@
 import db from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import nodemailer from 'nodemailer';
 import {getUserByEmail} from "../services/userServices.js";
-// Function to get user by email
-  
+
+////////////////////////////////
+// helper utilities functions //
+////////////////////////////////
+
   // Register function
   const register = async (req, res) => {
     try {
@@ -41,6 +45,25 @@ import {getUserByEmail} from "../services/userServices.js";
     }
   };
   
+const updateUserPassword = async(email, password) =>{
+  try{
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    const query = 'UPDATE users SET password = ? WHERE email = ?';
+    await db.query(query, [hashedPassword, email]);
+    return true;
+  }
+  catch(error){
+    console.log(error);
+    return false;
+  }
+};
+
+
+////////////////////
+// main functions //
+////////////////////
+
 
 const login = async (req, res) => 
   {
