@@ -2,18 +2,20 @@ import db from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from 'nodemailer';
-import {getUserByEmail} from "../services/userServices.js";
+import UserServices from '../services/userServices.js';
+import { sendPasswordResetEmailTest } from '../services/emailServices.js';
 
-////////////////////////////////
-// helper utilities functions //
-////////////////////////////////
+////////////////////
+// main functions //
+////////////////////
+
 
   // Register function
   const register = async (req, res) => {
     try {
       const { username, email, password } = req.body;
       // Check if the user already exists
-      const user = await getUserByEmail(email);
+      const user = await UserServices.getUserByEmail(email);
       if (user.length > 0) {
         console.log(`A new user tried to register with an existing email. Email: ${email} at ${new Date()}`);
         return res.status(400).json({
@@ -44,33 +46,13 @@ import {getUserByEmail} from "../services/userServices.js";
       });
     }
   };
-  
-const updateUserPassword = async(email, password) =>{
-  try{
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
-    const query = 'UPDATE users SET password = ? WHERE email = ?';
-    await db.query(query, [hashedPassword, email]);
-    return true;
-  }
-  catch(error){
-    console.log(error);
-    return false;
-  }
-};
-
-
-////////////////////
-// main functions //
-////////////////////
-
 
 const login = async (req, res) => 
   {
     try {
       const { email, password } = req.body;
       // Check if the user exists
-      const user = await getUserByEmail(email);
+      const user = await UserServices.getUserByEmail(email);
       if (user.length === 0) {
         return res.status(400).json({
           status: 'error',
@@ -116,7 +98,6 @@ const login = async (req, res) =>
         message: 'Internal Server Error',
       });
     }
-
   };
 
 // Finish implement this after user page has been made.
@@ -136,4 +117,32 @@ const logout = async (req, res) => {
     });
   }
 }
-export { register, login };
+
+const forgotPassword = async (req, res) => {
+  const {email} = req.body;
+  try {
+    const userResult = await UserServices.getUserIdByEmail(email);
+    if (userResult.status !== 'success') {
+      return res.status(404).json({
+        status: 'error',
+        message: 'User not found',
+      });
+    }
+
+    const resetToken = UserServices.generateResetToken();
+    await UserServices.storeResetToken(email, resetToken);
+    sendPasswordResetEmailTest(email, resetToken);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Password reset email sent',
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
+  }
+};
+export { register, login, logout, forgotPassword };

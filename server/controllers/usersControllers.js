@@ -1,5 +1,5 @@
 import db from '../db.js';
-import {getUserByEmail} from '../services/userServices.js';
+import UserServices from '../services/userServices.js';
 
 const getUserByUserName = async (req, res) => {
     try {
@@ -39,5 +39,19 @@ const getUserInfo = async (req, res) => {
             message: 'Internal Server Error',
         });
     }
-}
+};
+
+const updateUserPassword = async(email, password) =>{
+    try{
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      const query = 'UPDATE users SET password = ? WHERE email = ?';
+      await db.query(query, [hashedPassword, email]);
+      return true;
+    }
+    catch(error){
+      console.log(error);
+      return false;
+    }
+  };
 export { getUserByUserName, getUserInfo};

@@ -36,3 +36,12 @@ API Endpoints Tree:
         POST /api/tasks
         PUT /api/tasks/:id
         DELETE /api/tasks/:id
+
+
+11/27/2024:
+To use nodemailer, first go to your google account --> create an app password.
+Then create the transporter object, with the user being your gmail account, and the password is the one generated from the step above.
+
+11/30/2024:
+Added email sending testing with generated token.
+I should create an actual email reseting link using the token next, storing it in the database and verify it test next.
