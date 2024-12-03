@@ -44,9 +44,10 @@ class UserService {
     }
     const id_user = userResult.id_user;
     const query =
-      "UPDATE password_reset_tokens SET token = ?, expiresAt = ? WHERE id_user = ?";
-    const expiry = Date.now() + 3600000; // Token valid for 1 hour
-    await db.query(query, [resetToken, expiry, id_user]);
+      "INSERT INTO password_reset_tokens (id_user, token, createdAt ,expiresAt) VALUES (?, ?, ?, ?);";
+    const currentTime = new Date(Date.now());
+    const expiry =  new Date(Date.now() + 3600000); // Token valid for 1 hour
+    await db.query(query, [id_user,resetToken, currentTime ,expiry]);
   }
 
   async verifyResetToken(token) {
