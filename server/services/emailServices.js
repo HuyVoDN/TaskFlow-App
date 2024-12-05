@@ -35,7 +35,8 @@ const sendPasswordResetEmailTest =  (email, resetToken) => {
   const mailOptions = {
     to: email,
     subject: "Password Reset for your account test",
-    text: `This is the token generated: ${resetToken}`,
+    text: `Click the link below to reset your password`,
+    html :`<a href="${process.env.CLIENT_URL}/resetpassword/${resetToken}">Reset Password</a>`
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

@@ -12,5 +12,7 @@ router.get('/', (req, res) => {
 router.get('/getusers', getUsers);
 router.post('/sendemail', sendEmail);
 router.get('/getuserid/:email', UserServices.getUserIdByEmail);
-router.post('/forgotpassword', forgotPassword);   
+router.post('/forgotpassword', forgotPassword);
+router.get('/verifytoken/:token', UserServices.verifyResetToken); 
+router.post('/resetpassword', UserServices.resetPassword);   
 export default router;

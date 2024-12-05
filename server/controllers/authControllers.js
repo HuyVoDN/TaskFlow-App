@@ -145,4 +145,5 @@ const forgotPassword = async (req, res) => {
     });
   }
 };
+
 export { register, login, logout, forgotPassword };

@@ -5,6 +5,7 @@ import Registration from './pages/Registration/Registration';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
 import Forgot from './pages/ForgotPassword/Forgot';
+import Reset from './pages/ResetPassword/Reset';
 import Navbar from './Navbar/Navbar'
 import './App.scss'
 import { AuthProvider } from './Context/auth/AuthContext';
@@ -41,8 +42,12 @@ const router = createBrowserRouter([
         element: <Profile/>
       },
       {
-        path: "/forgot-password",
+        path: "/forgotpassword",
         element: <Forgot/>
+      },
+      {
+        path: "/resetpassword/:token",
+        element: <Reset/>
       }
       ,
       {

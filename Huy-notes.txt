@@ -45,3 +45,6 @@ Then create the transporter object, with the user being your gmail account, and 
 11/30/2024:
 Added email sending testing with generated token.
 I should create an actual email reseting link using the token next, storing it in the database and verify it test next.
+
+12/4/2024:
+When I click on the generated link, it should store whatever the token in the link to the params

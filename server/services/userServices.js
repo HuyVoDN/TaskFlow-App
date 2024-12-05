@@ -3,6 +3,13 @@ import crypto from "crypto";
 import bcrypt from "bcryptjs";
 
 class UserService {
+  constructor() {
+    this.getUserByEmail = this.getUserByEmail.bind(this);
+    this.getUserIdByEmail = this.getUserIdByEmail.bind(this);
+    this.verifyResetToken = this.verifyResetToken.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
+  }
+
   async getUserByEmail(email) {
     const query = "SELECT * FROM users WHERE email = ?";
     const [result] = await db.query(query, [email]);
@@ -46,8 +53,8 @@ class UserService {
     const query =
       "INSERT INTO password_reset_tokens (id_user, token, createdAt ,expiresAt) VALUES (?, ?, ?, ?);";
     const currentTime = new Date(Date.now());
-    const expiry =  new Date(Date.now() + 3600000); // Token valid for 1 hour
-    await db.query(query, [id_user,resetToken, currentTime ,expiry]);
+    const expiry = new Date(Date.now() + 3600000); // Token valid for 1 hour
+    await db.query(query, [id_user, resetToken, currentTime, expiry]);
   }
 
   async verifyResetToken(token) {
@@ -55,6 +62,32 @@ class UserService {
       "SELECT * FROM password_reset_tokens WHERE token = ? AND expiresAt > ?";
     const [rows] = await db.query(query, [token, Date.now()]);
     return rows.length > 0 ? rows[0] : null;
+  }
+
+  // only for api endpoint testing
+  async verifyResetTokenAPI(req, res) {
+    const { token } = req.params;
+    try {
+      const tokenData = await this.verifyToken(token);
+      
+      if (tokenData) {
+        return res.status(200).json({
+          status: 'success',
+          data: tokenData,
+        });
+      } else {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Invalid or expired token',
+        });
+      }
+    } catch (error) {
+      console.error("SQL Error:", error);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Internal Server Error',
+      });
+    }
   }
 
   async resetPassword(req, res) {
@@ -69,14 +102,35 @@ class UserService {
     }
 
     const hashedPassword = bcrypt.hashSync(newPassword, 10);
-    const query =
-      "UPDATE users SET password = ?, resetToken = NULL, resetTokenExpiry = NULL WHERE id_user = ?";
-    await db.query(query, [hashedPassword, user.id_user]);
 
-    res.status(200).json({
-      status: "success",
-      message: "Password reset successfully",
-    });
+    const connection = await db.getConnection();
+    try {
+      await connection.beginTransaction();
+
+      const updateUserQuery = "UPDATE users SET password = ? WHERE id_user = ?";
+      await connection.query(updateUserQuery, [hashedPassword, user.id_user]);
+
+      const updateTokenQuery = "UPDATE password_reset_tokens SET used = 1 WHERE id_user = ?";
+      await connection.query(updateTokenQuery, [user.id_user]);
+
+      await connection.commit();
+
+      res.status(200).json({
+        status: "success",
+        message: "Password reset successfully",
+      });
+      console.log(`Password reset for user ${user.id_user} at ${new Date()}, newPassword : ${newPassword}`);
+      
+    } catch (error) {
+      await connection.rollback();
+      console.error("SQL Error:", error);
+      res.status(500).json({
+        status: "error",
+        message: "Internal Server Error",
+      });
+    } finally {
+      connection.release();
+    }
   }
 }
 
