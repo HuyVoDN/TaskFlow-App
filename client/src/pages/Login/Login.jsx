@@ -212,7 +212,7 @@ const Login = () => {
           </FormControl>
 
           <div className="forgot">
-            <Link className="link" to="/forgot-password">
+            <Link className="link" to="/forgotpassword">
               Forgot your password?
             </Link>
           </div>

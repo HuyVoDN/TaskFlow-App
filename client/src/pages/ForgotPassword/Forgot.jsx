@@ -6,9 +6,15 @@ import FormControl from "@mui/material/FormControl";
 import EmailIcon from "@mui/icons-material/Email";
 import InputAdornment from "@mui/material/InputAdornment";
 import LockIcon from "@mui/icons-material/Lock";
+import Snackbar from "@mui/material/Snackbar";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import AuthContext from "../../Context/auth/AuthContext";
+
 const Forgot = () => {
+  const {forgotPassword, authError} = useContext(AuthContext);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -21,7 +27,7 @@ const Forgot = () => {
   });
   const validateForm = () => {
     const newErrors = {
-      email: !validateEmail(formData.email),
+      email: formData.email === "",
     };
 
     setErrors(newErrors);
@@ -39,15 +45,48 @@ const Forgot = () => {
   };
   const handleForgot = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // add logic here
+    try {
+      if (validateForm()) {
+        // add logic here
+        const success = await forgotPassword(formData);
+        if (success) {
+          setPopupMessage("Password reset email sent");
+          setShowPopup(true); 
+        }
+        else{
+          setPopupMessage("Password reset email not sent");
+          setShowPopup(false); // Reset the showPopup state
+          setTimeout(() => setShowPopup(true), 0); // Set it to true again after a short delay
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
+    
   };
   return (
     <>
       <div className="forgot-container">
         <Fade>
           <div className="forgot-form">
+          <Snackbar
+            open={showPopup}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            autoHideDuration={4000}
+            onClose={() => setShowPopup(false)}
+            message={popupMessage}
+            ContentProps={{
+              style: {
+                fontSize: "17px",
+                backgroundColor: "rgb(0, 0, 112)",
+                fontFamily: "Segoe UI",
+                fontWeight: "bold",
+                height: "60px",
+                textAlign: "center",
+                borderRadius: "10px",
+              },
+            }}
+          />
             <div className="forgot-header">
               <h1>Forgot Password</h1>
               <p className="forgot-text">

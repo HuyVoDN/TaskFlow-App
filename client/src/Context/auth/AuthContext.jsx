@@ -77,6 +77,35 @@ export const AuthProvider = ({ children }) => {
     setAuthError(null);
   };
 
+  const forgotPassword = async (formData) => {
+    try {
+      const response = await Axios.post('http://localhost:3000/auth/forgotpassword', {
+        email: formData.email,
+      });
+
+      if (response.status === 200) {
+        console.log('Successfully sent email');
+        console.log(response);
+        setAuthError(null);
+        return true;
+      } 
+      else if (response.status === 404){
+        console.log('The email was not found in our database.');
+        setAuthError(response.data.message);
+        console.log(authError);
+        return false;
+      }
+      else {
+        console.log(response);
+        setAuthError(response.data.message);
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      setAuthError(error.response.data.message);
+      return false;
+    }
+  }
   const contextValue = {
     user,
     token,
@@ -89,7 +118,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, authError, isAuthenticated, register, login, logout }}>
+    <AuthContext.Provider value={{ user, token, authError, isAuthenticated, register, login, logout, forgotPassword }}>
       {children}
     </AuthContext.Provider>
   );

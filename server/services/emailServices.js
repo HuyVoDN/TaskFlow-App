@@ -18,7 +18,8 @@ const sendPasswordResetEmail =  (email, resetToken) => {
     const mailOptions = {
       to: email,
       subject: "Password Reset for your account",
-      text: `Click on the link to reset your password: ${resetLink}`,
+      text: `Click the link below to reset your password`,
+      html :`<a href="${process.env.CLIENT_URL}/resetpassword/${resetToken}">Reset Password</a>`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -30,22 +31,22 @@ const sendPasswordResetEmail =  (email, resetToken) => {
     });
 };
 
-const sendPasswordResetEmailTest =  (email, resetToken) => {
+// const sendPasswordResetEmailTest =  (email, resetToken) => {
   
-  const mailOptions = {
-    to: email,
-    subject: "Password Reset for your account test",
-    text: `Click the link below to reset your password`,
-    html :`<a href="${process.env.CLIENT_URL}/resetpassword/${resetToken}">Reset Password</a>`
-  };
+//   const mailOptions = {
+//     to: email,
+//     subject: "Password Reset for your account test",
+//     text: `Click the link below to reset your password`,
+//     html :`<a href="${process.env.CLIENT_URL}/resetpassword/${resetToken}">Reset Password</a>`
+//   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-};
+//   transporter.sendMail(mailOptions, (error, info) => {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log('Email sent: ' + info.response);
+//     }
+//   });
+// };
 
-export {transporter, sendPasswordResetEmail, sendPasswordResetEmailTest};
+export {transporter, sendPasswordResetEmail};

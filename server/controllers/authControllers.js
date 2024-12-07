@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from 'nodemailer';
 import UserServices from '../services/userServices.js';
-import { sendPasswordResetEmailTest } from '../services/emailServices.js';
+import { sendPasswordResetEmail } from '../services/emailServices.js';
 
 ////////////////////
 // main functions //
@@ -118,6 +118,7 @@ const logout = async (req, res) => {
   }
 }
 
+// forgotPassword first half portion
 const forgotPassword = async (req, res) => {
   const {email} = req.body;
   try {
@@ -131,7 +132,7 @@ const forgotPassword = async (req, res) => {
 
     const resetToken = UserServices.generateResetToken();
     await UserServices.storeResetToken(email, resetToken);
-    sendPasswordResetEmailTest(email, resetToken);
+    sendPasswordResetEmail(email, resetToken);
 
     res.status(200).json({
       status: 'success',
