@@ -1,61 +1,58 @@
-.profile-page {
-    padding: 2rem;
-    max-height: 100vh;
-    background-color: #f5f5f5;
-  
-    .profile-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-  
-      .profile-header {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 2rem;
-  
-        .avatar-section {
-          position: relative;
-          margin-bottom: 1rem;
-  
-          .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border: 4px solid #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          }
-  
-          .camera-icon {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background-color: #fff;
-            padding: 8px;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-          }
-        }
-  
-        .edit-button {
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-        }
-  
-        .action-buttons {
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-          display: flex;
-          gap: 0.5rem;
-        }
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: radial-gradient(#0d1d48, #17151d);
+  .profile-form{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    background-color: rgba(55, 55, 55, 0.185);
+    box-shadow: 0px 5px 25px rgba(255, 255, 255, 0.116), 0px -5px 25px rgba(255, 255, 255, 0.116);
+
+    .profile-header{
+      display:flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      h1{
+        font-family: "Ubuntu";
+        font-size: 50px;
+        color: rgb(32, 93, 173);
       }
-  
-      .profile-info {
-        .MuiTextField-root {
-          margin-bottom: 1rem;
+      .icon-container{
+        background-color:  rgb(32, 93, 173);
+        transition: all 0.15s ease-in-out;
+        margin-left:10px;
+        .edit-icon{
+          color: rgb(255, 255, 255);
+          transition: all 0.15s ease-in-out;
         }
+        &:hover{
+          background-color: rgb(255, 255, 255);
+          .edit-icon{
+            color: rgb(32, 93, 173);
+          }
+        }
+      } 
+     
+    }
+    .profile-picture{
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      img{
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
       }
     }
   }
+}

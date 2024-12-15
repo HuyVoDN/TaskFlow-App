@@ -29,7 +29,7 @@ const UserProfile = () => {
   });
 
   const handleEdit = () => {
-    setIsEditing(true);
+    setIsEditing(!isEditing);
   };
 
   const handleSave = () => {
@@ -40,80 +40,75 @@ const UserProfile = () => {
   const handleCancel = () => {
     setIsEditing(false);
   };
-
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileData({ ...profileData, profilePicture: reader.result });
+    };
+    reader.readAsDataURL(file);
+  }
   return (
     <div className="profile-container">
-      <Box className="profile-page">
-        <Paper elevation={3} className="profile-container">
-          <Grid container spacing={3}>
-            {/* Profile Header */}
-            <Grid item xs={12} className="profile-header">
-              <Box className="avatar-section">
-                <Avatar
-                  src={profileData.avatar}
-                  className="profile-avatar"
-                  alt={profileData.username}
-                />
-                <IconButton className="camera-icon">
-                  <PhotoCameraIcon />
-                </IconButton>
-              </Box>
-              {!isEditing ? (
-                <IconButton className="edit-button" onClick={handleEdit}>
-                  <EditIcon />
-                </IconButton>
-              ) : (
-                <Box className="action-buttons">
-                  <IconButton color="primary" onClick={handleSave}>
-                    <SaveIcon />
-                  </IconButton>
-                  <IconButton color="error" onClick={handleCancel}>
-                    <CancelIcon />
-                  </IconButton>
-                </Box>
-              )}
-            </Grid>
-
-            {/* Profile Info */}
-            <Grid item xs={12} className="profile-info">
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Username"
-                    value={profileData.username}
-                    disabled={!isEditing}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Email"
-                    value={profileData.email}
-                    disabled={!isEditing}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="First Name"
-                    value={profileData.firstName}
-                    disabled={!isEditing}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Last Name"
-                    value={profileData.lastName}
-                    disabled={!isEditing}
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Box>
+      <div className="profile-form">
+        <div className="profile-header">
+          <h1>My Profile</h1>
+          <IconButton onClick={handleEdit} className="icon-container">
+            <EditIcon className="edit-icon"></EditIcon>
+          </IconButton>
+        </div>
+        <div className="profile-picture" > 
+          <Avatar
+            alt="Profile Picture"
+            src={profileData.profilePicture}
+            sx={{ width: 100, height: 100 }}
+          />
+          <input
+            type="file"
+            style={{ display: "none" }}
+            className="img-input"
+            onClick={handleProfilePictureChange}
+          />
+        </div>
+        
+        <div className="profile-details">
+          <TextField
+            label="Username"
+            value={profileData.username}
+            disabled={!isEditing}
+  
+          />
+          <TextField
+            label="Email"
+            value={profileData.email}
+            disabled={!isEditing}
+            
+          />
+          <TextField
+            label="First Name"
+            value={profileData.firstName}
+            disabled={!isEditing}
+          />
+          <TextField
+            label="Last Name"
+            value={profileData.lastName}
+            disabled={!isEditing}
+            
+          />
+          <TextField
+            label="User Role"
+            value={profileData.userRole}
+            disabled
+            
+          />
+          <TextField
+            label="Password"
+            value={profileData.password}
+            disabled={!isEditing}
+            
+          />
+        </div>
+      </div>
     </div>
   );
 };
