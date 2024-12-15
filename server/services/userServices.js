@@ -7,6 +7,7 @@ class UserService {
     this.getUserByEmail = this.getUserByEmail.bind(this);
     this.getUserIdByEmail = this.getUserIdByEmail.bind(this);
     this.verifyResetToken = this.verifyResetToken.bind(this);
+    this.verifyResetTokenAPI = this.verifyResetTokenAPI.bind(this);
     this.resetPassword = this.resetPassword.bind(this);
   }
 
@@ -58,17 +59,23 @@ class UserService {
   }
 
   async verifyResetToken(token) {
-    const query =
-      "SELECT * FROM password_reset_tokens WHERE token = ? AND expiresAt > ?";
-    const [rows] = await db.query(query, [token, Date.now()]);
-    return rows.length > 0 ? rows[0] : null;
+    try {
+      console.log(token);
+      const query = "SELECT * FROM password_reset_tokens WHERE token = ? and expiresAt > ?";
+      const [rows] = await db.query(query, [token, new Date(Date.now())]);
+      return rows.length > 0 ? rows[0] : null;
+    } catch (error) {
+      console.error("SQL Error:", error);
+      throw new Error("Internal Server Error");
+    }
   }
 
   // only for api endpoint testing
   async verifyResetTokenAPI(req, res) {
     const { token } = req.params;
+    console.log(token);
     try {
-      const tokenData = await this.verifyToken(token);
+      const tokenData = await this.verifyResetToken(token);
       
       if (tokenData) {
         return res.status(200).json({
@@ -93,14 +100,19 @@ class UserService {
   async resetPassword(req, res) {
     const { token, newPassword } = req.body;
     const user = await this.verifyResetToken(token);
-
+    console.log(req.body);
     if (!user) {
       return res.status(400).json({
         status: "error",
         message: "Invalid or expired token",
       });
     }
-
+    if (user.used == 1 ){
+      return res.status(400).json({
+        status: "error",
+        message: "Token already used",
+      });
+    }
     const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
     const connection = await db.getConnection();

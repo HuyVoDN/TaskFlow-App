@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.status === 200) {
         console.log('Successfully sent email');
-        console.log(response);
+        //console.log(response);
         setAuthError(null);
         return true;
       } 
@@ -101,8 +101,33 @@ export const AuthProvider = ({ children }) => {
         return false;
       }
     } catch (error) {
-      console.log(error);
-      setAuthError(error.response.data.message);
+      console.log(error.response.status);
+      setAuthError(error.response.status);
+      return false;
+    }
+  }
+
+  const resetPassword = async (formData) => {
+    try {
+      const response = await Axios.post('http://localhost:3000/auth/resetpassword', {
+        token: formData.token,
+        newPassword: formData.newPassword,
+      },
+    );
+      console.log(formData);
+      if (response.status === 200) {
+        console.log('Successfully reset password');
+        console.log(response);
+        setAuthError(null);
+        return true;
+      } else {
+        console.log(response);
+        setAuthError(response.data.message);
+        return false;
+      }
+    } catch (error) {
+      console.log(error.response.status);
+      setAuthError(error.response.status);
       return false;
     }
   }
@@ -118,7 +143,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, authError, isAuthenticated, register, login, logout, forgotPassword }}>
+    <AuthContext.Provider value={{ user, token, authError, isAuthenticated, register, login, logout, forgotPassword, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );

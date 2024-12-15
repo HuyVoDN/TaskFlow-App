@@ -10,6 +10,6 @@ router.get('/', (req, res) => {
 router.post('/register', register);
 router.post('/login', login);
 router.post('/forgotpassword', forgotPassword);
-router.get('/verifytoken/:token', UserServices.verifyResetToken); 
+router.get('/verifytoken/:token', UserServices.verifyResetTokenAPI); 
 router.post('/resetpassword', UserServices.resetPassword);  
 export default router;

@@ -47,16 +47,21 @@ const Forgot = () => {
     e.preventDefault();
     try {
       if (validateForm()) {
-        // add logic here
+      
         const success = await forgotPassword(formData);
         if (success) {
           setPopupMessage("Password reset email sent");
           setShowPopup(true); 
         }
-        else{
+        else if (authError == "404" || authError == "User not found") {
+          setPopupMessage("Email not found in our database");
+          setShowPopup(false); 
+          setTimeout(() => setShowPopup(true), 0); 
+        }
+        else {
           setPopupMessage("Password reset email not sent");
-          setShowPopup(false); // Reset the showPopup state
-          setTimeout(() => setShowPopup(true), 0); // Set it to true again after a short delay
+          setShowPopup(false);
+          setTimeout(() => setShowPopup(true), 0); 
         }
       }
     } catch (error) {
